@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Srishti Singh — Frontend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fraunces:ital,wght@1,300;1,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --coral:#FF4D6D;--yellow:#FFBE0B;--mint:#3BF0C0;--sky:#4CC9F0;
+  --purple:#7B2FBE;--violet:#C77DFF;--dark:#0A0A0F;--mid:#141420;
+  --card:#1A1A2E;--offwhite:#F8F4EF;
+  --grad1:linear-gradient(135deg,#FF4D6D,#FFBE0B);
+  --grad2:linear-gradient(135deg,#4CC9F0,#3BF0C0);
+  --grad3:linear-gradient(135deg,#7B2FBE,#C77DFF);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:#fff;overflow-x:hidden;cursor:none}
+
+#cursor{position:fixed;width:10px;height:10px;background:var(--coral);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(255,77,109,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s ease,top .1s ease}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 5rem;background:rgba(10,10,15,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;text-decoration:none;color:#fff;letter-spacing:-.03em}
+.logo span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-menu{display:flex;gap:2rem;list-style:none}
+.nav-menu a{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;padding-bottom:4px;position:relative}
+.nav-menu a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--grad1);transition:width .3s}
+.nav-menu a:hover{color:#fff}
+.nav-menu a:hover::after{width:100%}
+.nav-cta{background:var(--grad1);color:#fff;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.6rem 1.4rem;border-radius:100px;text-decoration:none;transition:transform .3s,box-shadow .3s}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,77,109,.4)}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+
+/* HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 5rem 4rem;gap:4rem;position:relative;overflow:hidden}
+.blobs{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.18}
+.blob-a{width:600px;height:600px;background:var(--coral);top:-150px;right:-100px;animation:bm1 12s ease-in-out infinite}
+.blob-b{width:400px;height:400px;background:var(--purple);bottom:-100px;left:-80px;animation:bm2 15s ease-in-out infinite}
+.blob-c{width:300px;height:300px;background:var(--sky);top:40%;left:30%;animation:bm3 10s ease-in-out infinite}
+@keyframes bm1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-40px,30px) scale(1.1)}}
+@keyframes bm2{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+@keyframes bm3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,30px) scale(.9)}}
+
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:.4rem 1rem;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:2rem;animation:fadeUp .6s ease .1s both}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3rem,6.5vw,6rem);font-weight:800;line-height:1.0;letter-spacing:-.04em;margin-bottom:.5rem;animation:fadeUp .6s ease .2s both}
+.hero-name .stroke{color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.2)}
+.hero-role{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1.2rem,2.2vw,1.8rem);font-weight:300;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.8rem;animation:fadeUp .6s ease .3s both}
+.hero-desc{font-size:1rem;line-height:1.8;color:rgba(255,255,255,.5);max-width:500px;font-weight:300;margin-bottom:2.5rem;animation:fadeUp .6s ease .4s both}
+.hero-desc strong{color:rgba(255,255,255,.85);font-weight:500}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .6s ease .5s both}
+.btn-glow{background:var(--grad1);color:#fff;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.9rem 2rem;border-radius:100px;text-decoration:none;transition:transform .3s,box-shadow .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-glow:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(255,77,109,.5)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.65);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.9rem 2rem;border-radius:100px;text-decoration:none;border:1px solid rgba(255,255,255,.15);transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-ghost:hover{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.05)}
+.hero-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2rem;animation:fadeUp .6s ease .6s both}
+.chip{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.32rem .85rem;border-radius:100px;border:1px solid}
+.c1{color:var(--coral);border-color:rgba(255,77,109,.3);background:rgba(255,77,109,.08)}
+.c2{color:var(--yellow);border-color:rgba(255,190,11,.3);background:rgba(255,190,11,.08)}
+.c3{color:var(--mint);border-color:rgba(59,240,192,.3);background:rgba(59,240,192,.08)}
+.c4{color:var(--sky);border-color:rgba(76,201,240,.3);background:rgba(76,201,240,.08)}
+.c5{color:var(--violet);border-color:rgba(199,125,255,.3);background:rgba(199,125,255,.08)}
+
+/* HERO VISUAL */
+.hero-visual{position:relative;z-index:2;display:flex;justify-content:center;align-items:center;animation:fadeIn .8s ease .7s both}
+.phone-wrap{position:relative}
+.phone{width:255px;height:510px;background:var(--card);border-radius:40px;border:2px solid rgba(255,255,255,.1);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04);animation:phoneFloat 5s ease-in-out infinite}
+@keyframes phoneFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-18px) rotate(2deg)}}
+.phone-notch{width:70px;height:20px;background:var(--dark);border-radius:0 0 14px 14px;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:5}
+.phone-screen{width:100%;height:100%;background:linear-gradient(160deg,#1a0533 0%,#0d1b2a 50%,#0a1a14 100%);padding:2.2rem .8rem .8rem;display:flex;flex-direction:column;gap:.5rem}
+.ig-topbar-ph{display:flex;justify-content:space-between;align-items:center;padding:.2rem .3rem}
+.ig-brand{font-family:'Fraunces',serif;font-style:italic;font-size:1.3rem;color:#fff;font-weight:700}
+.ig-icons{display:flex;gap:.5rem;font-size:.9rem;color:rgba(255,255,255,.7)}
+.stories-row{display:flex;gap:.5rem;overflow:hidden}
+.story{width:38px;height:38px;border-radius:50%;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+.s1{background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#FF4D6D,#FFBE0B) border-box}
+.s2{background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#4CC9F0,#3BF0C0) border-box}
+.s3{background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#7B2FBE,#C77DFF) border-box}
+.s4{background:linear-gradient(var(--card),var(--card)) padding-box,linear-gradient(135deg,#FFBE0B,#FF4D6D) border-box}
+.ph-post{background:rgba(255,255,255,.05);border-radius:10px;overflow:hidden}
+.ph-post-head{display:flex;align-items:center;gap:.4rem;padding:.4rem .5rem}
+.ph-av{width:20px;height:20px;border-radius:50%;background:var(--grad1)}
+.ph-user{font-size:.58rem;font-weight:600}
+.ph-post-img{width:100%;height:80px;background:linear-gradient(135deg,rgba(255,77,109,.35),rgba(76,201,240,.3));display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.ph-post-foot{display:flex;gap:.6rem;padding:.4rem .5rem;font-size:.65rem;color:rgba(255,255,255,.55)}
+.ig-grid-ph{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;flex:1}
+.ig-cell{aspect-ratio:1}
+.floating-badges{position:absolute;pointer-events:none}
+.fb{position:absolute;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:.7rem 1rem;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.fb1{top:50px;left:-90px;animation:fb1 5s ease-in-out infinite}
+.fb2{bottom:100px;right:-95px;animation:fb2 6s ease-in-out infinite}
+.fb3{top:45%;left:-105px;animation:fb3 7s ease-in-out infinite}
+@keyframes fb1{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fb2{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes fb3{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}
+.fb-ico{font-size:1rem;display:block;margin-bottom:.15rem}
+.fb-label{font-size:.6rem;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.fb-val{font-size:.85rem;font-family:'Syne',sans-serif;font-weight:800;color:#fff}
+
+/* SECTIONS */
+section{padding:7rem 5rem}
+.wrap{max-width:1200px;margin:0 auto}
+.sec-lbl{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.35);margin-bottom:1.2rem}
+.sec-lbl::before{content:'';display:block;width:28px;height:2px;border-radius:1px}
+.l-coral::before{background:var(--coral)}
+.l-yellow::before{background:var(--yellow)}
+.l-mint::before{background:var(--mint)}
+.l-sky::before{background:var(--sky)}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:.8rem}
+.grad-text{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ABOUT */
+.about{background:var(--mid)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-txt{font-size:.98rem;line-height:1.85;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:1rem}
+.about-txt strong{color:rgba(255,255,255,.85);font-weight:500}
+.about-link{display:inline-flex;align-items:center;gap:8px;color:var(--coral);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;margin-top:1rem;transition:gap .3s}
+.about-link:hover{gap:14px}
+.astats{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:2rem}
+.astat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:1.4rem;transition:background .3s,transform .3s}
+.astat:hover{background:rgba(255,255,255,.08);transform:translateY(-4px)}
+.astat-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;margin-bottom:.3rem;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.astat-l{font-size:.78rem;color:rgba(255,255,255,.38);font-weight:300}
+.about-card{background:linear-gradient(135deg,rgba(255,77,109,.12),rgba(76,201,240,.08));border:1px solid rgba(255,255,255,.08);border-radius:28px;padding:2.5rem;height:420px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.ac-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:10rem;font-weight:800;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.04);user-select:none}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;position:relative;z-index:2}
+.pill{padding:.4rem .9rem;border-radius:100px;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:transform .3s}
+.pill:hover{transform:scale(1.06)}
+.p-coral{background:rgba(255,77,109,.18);color:var(--coral);border:1px solid rgba(255,77,109,.28)}
+.p-yellow{background:rgba(255,190,11,.12);color:var(--yellow);border:1px solid rgba(255,190,11,.25)}
+.p-mint{background:rgba(59,240,192,.1);color:var(--mint);border:1px solid rgba(59,240,192,.22)}
+.p-sky{background:rgba(76,201,240,.1);color:var(--sky);border:1px solid rgba(76,201,240,.22)}
+.p-violet{background:rgba(199,125,255,.1);color:var(--violet);border:1px solid rgba(199,125,255,.22)}
+.ac-label{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:rgba(255,255,255,.6);margin-bottom:1rem;position:relative;z-index:2}
+
+/* SKILLS */
+.skills{background:var(--dark)}
+.skills-head{text-align:center;margin-bottom:4rem}
+.sk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.sk-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:1.8rem;transition:transform .3s,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;cursor:none}
+.sk-card:hover{transform:translateY(-8px);border-color:rgba(255,255,255,.16);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.sk-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem}
+.sk-ico{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.ico-coral{background:rgba(255,77,109,.14)}
+.ico-yellow{background:rgba(255,190,11,.1)}
+.ico-mint{background:rgba(59,240,192,.1)}
+.ico-sky{background:rgba(76,201,240,.1)}
+.ico-violet{background:rgba(199,125,255,.1)}
+.ico-w{background:rgba(255,255,255,.07)}
+.sk-lv{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.22rem .6rem;border-radius:100px}
+.lv-e{background:rgba(59,240,192,.14);color:var(--mint)}
+.lv-a{background:rgba(255,190,11,.1);color:var(--yellow)}
+.lv-g{background:rgba(76,201,240,.1);color:var(--sky)}
+.sk-name{font-family:'Syne',sans-serif;font-size:.93rem;font-weight:700;margin-bottom:.4rem}
+.sk-desc{font-size:.78rem;color:rgba(255,255,255,.38);line-height:1.5;font-weight:300;margin-bottom:1rem}
+.sk-bar{height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.sk-fill{height:100%;border-radius:2px;width:0;transition:width 1.4s ease}
+.f-coral{background:var(--grad1)}
+.f-yellow{background:linear-gradient(90deg,var(--yellow),#FF9A3C)}
+.f-mint{background:linear-gradient(90deg,var(--mint),var(--sky))}
+.f-sky{background:linear-gradient(90deg,var(--sky),var(--violet))}
+
+/* PROJECTS */
+.projects{background:var(--mid)}
+.proj-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.pc{border-radius:24px;overflow:hidden;position:relative;cursor:none;transition:transform .4s}
+.pc:hover{transform:translateY(-8px)}
+.pc-feat{grid-column:span 2}
+.pc-vis{position:relative;overflow:hidden}
+.pc-feat .pc-vis{height:240px}
+.pc:not(.pc-feat) .pc-vis{height:170px}
+.pc-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .5s}
+.pc:hover .pc-bg{transform:scale(1.06)}
+.bg-insta{background:linear-gradient(135deg,#833AB4 0%,#FD1D1D 50%,#FCB045 100%)}
+.bg-host{background:linear-gradient(135deg,#0F2027,#203A43,#2C5364)}
+.bg-port{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.bg-boot{background:linear-gradient(135deg,#f7971e,#ffd200)}
+/* mock screens */
+.mock{width:72%;height:78%;background:rgba(0,0,0,.38);border-radius:10px;border:1px solid rgba(255,255,255,.14);display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(4px)}
+.mock-bar{height:20px;background:rgba(0,0,0,.5);display:flex;align-items:center;padding:0 7px;gap:4px;flex-shrink:0}
+.md{width:6px;height:6px;border-radius:50%}
+.mock-body{flex:1;overflow:hidden}
+/* instagram */
+.ig-m{height:100%;display:flex;flex-direction:column}
+.ig-m-top{background:rgba(0,0,0,.5);padding:3px 6px;display:flex;justify-content:space-between;font-size:.5rem;font-family:'Fraunces',serif;font-style:italic;color:#fff}
+.ig-m-stories{display:flex;gap:3px;padding:3px 5px}
+.ig-m-s{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--coral);background:rgba(255,255,255,.06)}
+.ig-m-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;flex:1}
+.ig-m-cell{aspect-ratio:1}
+/* host */
+.host-m{padding:4px;height:100%;display:flex;flex-direction:column;gap:3px}
+.host-m-nav{background:rgba(255,255,255,.1);height:12px;border-radius:2px;display:flex;align-items:center;padding:0 4px;gap:3px}
+.host-m-hero{flex:1;background:rgba(255,255,255,.07);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px}
+.host-m-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px}
+.host-m-card{height:16px;background:rgba(255,255,255,.07);border-radius:2px}
+/* port */
+.port-m{padding:5px;height:100%;display:flex;flex-direction:column;gap:3px}
+/* boot */
+.boot-m{padding:4px;height:100%;display:flex;flex-direction:column;gap:2px}
+.boot-m-nav{height:12px;background:rgba(0,0,0,.3);border-radius:2px;display:flex;align-items:center;padding:0 4px;gap:4px}
+.boot-m-hero{flex:1;background:rgba(247,151,30,.15);border-radius:3px;display:flex;align-items:center;justify-content:center}
+.boot-m-row{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.boot-m-c{height:14px;background:rgba(255,255,255,.07);border-radius:2px}
+
+.pc-info{background:var(--card);padding:1.4rem 1.6rem;border-top:1px solid rgba(255,255,255,.06)}
+.pc-info-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem}
+.pc-cat{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.32)}
+.pc-arrow{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:rgba(255,255,255,.38);transition:all .3s;text-decoration:none}
+.pc:hover .pc-arrow{background:var(--coral);border-color:var(--coral);color:#fff}
+.pc-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.35rem}
+.pc-desc{font-size:.8rem;color:rgba(255,255,255,.38);line-height:1.5;font-weight:300;margin-bottom:.7rem}
+.pc-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.ptag{font-size:.62rem;font-family:'Syne',sans-serif;font-weight:700;text-transform:uppercase;padding:.18rem.5rem;border-radius:100px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.08)}
+
+/* EXPERIENCE */
+.experience{background:var(--dark)}
+.exp-grid{display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:start}
+.exp-sticky{position:sticky;top:7rem}
+.exp-sticky p{font-size:.92rem;color:rgba(255,255,255,.42);line-height:1.7;font-weight:300;margin-top:.8rem}
+.timeline{position:relative;padding-left:2.4rem}
+.timeline::before{content:'';position:absolute;left:10px;top:8px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--coral),var(--violet),var(--mint),transparent)}
+.exp-item{position:relative;padding-bottom:2.2rem}
+.exp-item:last-child{padding-bottom:0}
+.exp-dot{position:absolute;left:-2.4rem;top:4px;width:22px;height:22px;border-radius:50%;border:2px solid var(--coral);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:.55rem;z-index:2;transition:transform .3s}
+.exp-item:nth-child(2) .exp-dot{border-color:var(--violet)}
+.exp-item:nth-child(3) .exp-dot{border-color:var(--mint)}
+.exp-item:nth-child(4) .exp-dot{border-color:var(--sky)}
+.exp-item:hover .exp-dot{transform:scale(1.35)}
+.exp-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:1.4rem;transition:border-color .3s,transform .3s}
+.exp-card:hover{border-color:rgba(255,255,255,.14);transform:translateX(5px)}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.7rem}
+.exp-ttl{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700}
+.exp-co{font-family:'Syne',sans-serif;font-size:.75rem;font-weight:600;margin-top:.12rem}
+.exp-date{font-size:.7rem;background:rgba(255,255,255,.06);padding:.22rem .65rem;border-radius:100px;color:rgba(255,255,255,.4);white-space:nowrap}
+.exp-body{font-size:.85rem;color:rgba(255,255,255,.42);line-height:1.7;font-weight:300}
+
+/* CONTACT */
+.contact{background:var(--mid);text-align:center;position:relative;overflow:hidden}
+.c-blobs{position:absolute;inset:0;pointer-events:none}
+.cb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.11}
+.cb1{width:700px;height:700px;background:var(--coral);top:-200px;left:-200px}
+.cb2{width:500px;height:500px;background:var(--purple);bottom:-150px;right:-150px}
+.contact-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.contact-inner .sec-lbl{justify-content:center}
+.contact-big{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem}
+.contact-sub{font-size:.98rem;color:rgba(255,255,255,.42);line-height:1.75;margin-bottom:2.5rem;font-weight:300}
+.contact-email{display:inline-block;font-family:'Syne',sans-serif;font-size:clamp(1rem,2.3vw,1.7rem);font-weight:800;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;margin-bottom:3rem;letter-spacing:-.02em;transition:opacity .3s}
+.contact-email:hover{opacity:.75}
+.socials{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.soc-btn{display:flex;align-items:center;gap:7px;padding:.65rem 1.3rem;border-radius:100px;text-decoration:none;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;border:1px solid rgba(255,255,255,.11);color:rgba(255,255,255,.55);transition:all .3s;background:rgba(255,255,255,.04)}
+.soc-btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.22);transform:translateY(-3px)}
+
+footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.foot-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;text-decoration:none;color:#fff}
+.foot-logo span{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+footer p{font-size:.78rem;color:rgba(255,255,255,.28);font-weight:300}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr;text-align:center;padding:7rem 3rem 4rem}
+  .hero-visual{display:none}
+  .hero-desc{margin:0 auto 2.5rem}
+  .hero-btns,.hero-chips{justify-content:center}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .about-card{display:none}
+  .sk-grid{grid-template-columns:repeat(2,1fr)}
+  .proj-grid{grid-template-columns:1fr 1fr}
+  .pc-feat{grid-column:span 2}
+  .exp-grid{grid-template-columns:1fr}
+  .exp-sticky{position:static}
+  nav{padding:1rem 2rem}
+  section{padding:5rem 2.5rem}
+  footer{padding:1.8rem 2rem}
+}
+@media(max-width:768px){
+  .nav-menu,.nav-cta{display:none}
+  .hamburger{display:flex}
+  .sk-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr}
+  .pc-feat{grid-column:span 1}
+  .proj-head{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:500px){
+  .sk-grid{grid-template-columns:1fr}
+  section{padding:4rem 1.5rem}
+  .astats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Srishti<span>.</span></a>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="blobs">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>Open to work &amp; collaborations</div>
+    <h1 class="hero-name">Srishti<br><span class="stroke">Singh</span></h1>
+    <p class="hero-role">Frontend Developer &amp; UI Designer</p>
+    <p class="hero-desc">I build <strong>responsive, dynamic &amp; interactive</strong> websites with stunning visuals and flawless performance. Expert in <strong>HTML, CSS, Bootstrap &amp; JavaScript</strong> — turning ideas into pixel-perfect digital experiences.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-glow"><i class="fas fa-eye"></i> View My Work</a>
+      <a href="#contact" class="btn-ghost"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip c1">HTML5</span>
+      <span class="chip c2">CSS3</span>
+      <span class="chip c3">Bootstrap</span>
+      <span class="chip c4">JavaScript</span>
+      <span class="chip c5">Responsive Design</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ig-topbar-ph">
+            <span class="ig-brand">Instagram</span>
+            <span class="ig-icons"><i class="fas fa-heart"></i> <i class="fas fa-paper-plane"></i></span>
+          </div>
+          <div class="stories-row">
+            <div class="story s1">🌸</div>
+            <div class="story s2">⭐</div>
+            <div class="story s3">✨</div>
+            <div class="story s4">🎨</div>
+          </div>
+          <div class="ph-post">
+            <div class="ph-post-head"><div class="ph-av"></div><span class="ph-user">srishti.codes</span></div>
+            <div class="ph-post-img">💻</div>
+            <div class="ph-post-foot"><span>❤️ 312</span><span>💬 18</span><span>📤</span></div>
+          </div>
+          <div class="ig-grid-ph" style="flex:1">
+            <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(255,77,109,.5),rgba(255,190,11,.4));aspect-ratio:1"></div>
+            <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(76,201,240,.4),rgba(59,240,192,.4));aspect-ratio:1"></div>
+            <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(199,125,255,.5),rgba(255,77,109,.3));aspect-ratio:1"></div>
+            <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(255,190,11,.4),rgba(255,77,109,.3));aspect-ratio:1"></div>
+            <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(59,240,192,.4),rgba(76,201,240,.3));aspect-ratio:1"></div>
+            <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(123,47,190,.5),rgba(199,125,255,.4));aspect-ratio:1"></div>
+          </div>
+          <div style="display:flex;justify-content:space-around;padding:.3rem;border-top:1px solid rgba(255,255,255,.07);font-size:.8rem;color:rgba(255,255,255,.5)">
+            <span>🏠</span><span>🔍</span><span>🎬</span><span>🛍️</span><span>👤</span>
+          </div>
+        </div>
+      </div>
+      <div class="floating-badges">
+        <div class="fb fb1">
+          <span class="fb-ico">🏆</span>
+          <div class="fb-label">Projects</div>
+          <div class="fb-val">10+ Done</div>
+        </div>
+        <div class="fb fb2">
+          <span class="fb-ico">⚡</span>
+          <div class="fb-label">Stack</div>
+          <div class="fb-val">HTML·CSS·JS</div>
+        </div>
+        <div class="fb fb3">
+          <span class="fb-ico">🎨</span>
+          <div class="fb-label">Focus</div>
+          <div class="fb-val">Creative UI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="sec-lbl l-coral">About Me</div>
+        <h2 class="sec-title">Crafting the web,<br><span class="grad-text">one pixel at a time</span></h2>
+        <p class="about-txt">Hi! I'm <strong>Srishti Singh</strong>, a passionate frontend developer who loves building beautiful, interactive, and fully responsive websites. I blend creative design thinking with clean, structured code.</p>
+        <p class="about-txt">My core expertise is in <strong>HTML5, CSS3, Bootstrap 5</strong> and <strong>JavaScript</strong> — tools I use every day to build everything from social media clones and hosting platforms to polished portfolio websites.</p>
+        <p class="about-txt">I believe great websites are <strong>designed with intention</strong>, built with care, and optimized for every device and user.</p>
+        <a href="#projects" class="about-link">Explore my projects <i class="fas fa-arrow-right"></i></a>
+        <div class="astats">
+          <div class="astat"><div class="astat-n">10+</div><div class="astat-l">Projects Built</div></div>
+          <div class="astat"><div class="astat-n">100%</div><div class="astat-l">Responsive</div></div>
+          <div class="astat"><div class="astat-n">5+</div><div class="astat-l">Technologies</div></div>
+          <div class="astat"><div class="astat-n">∞</div><div class="astat-l">Passion for Code</div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="about-card">
+          <div class="ac-bg">SS</div>
+          <div class="ac-label">My Tech Arsenal</div>
+          <div class="pills">
+            <span class="pill p-coral">HTML5</span>
+            <span class="pill p-yellow">CSS3</span>
+            <span class="pill p-mint">Bootstrap 5</span>
+            <span class="pill p-sky">JavaScript</span>
+            <span class="pill p-violet">Responsive Design</span>
+            <span class="pill p-coral">Flexbox</span>
+            <span class="pill p-yellow">CSS Grid</span>
+            <span class="pill p-mint">Animations</span>
+            <span class="pill p-sky">DOM API</span>
+            <span class="pill p-violet">UI Design</span>
+            <span class="pill p-coral">Git</span>
+            <span class="pill p-yellow">Web Hosting</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="skills-head reveal">
+      <div class="sec-lbl l-yellow" style="justify-content:center">Tech Stack</div>
+      <h2 class="sec-title">Skills &amp; Expertise</h2>
+      <p style="color:rgba(255,255,255,.38);font-size:.92rem;max-width:480px;margin:.4rem auto 0;font-weight:300">Everything I use to build fast, beautiful, responsive websites</p>
+    </div>
+    <div class="sk-grid">
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-coral">🧱</div><span class="sk-lv lv-e">Expert</span></div>
+        <div class="sk-name">HTML5</div>
+        <div class="sk-desc">Semantic markup, accessibility standards, SEO-friendly structure & modern HTML5 APIs</div>
+        <div class="sk-bar"><div class="sk-fill f-coral" data-w="95"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-sky">🎨</div><span class="sk-lv lv-e">Expert</span></div>
+        <div class="sk-name">CSS3</div>
+        <div class="sk-desc">Flexbox, Grid, custom properties, animations, transitions & responsive media queries</div>
+        <div class="sk-bar"><div class="sk-fill f-sky" data-w="93"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-violet">🅱️</div><span class="sk-lv lv-e">Expert</span></div>
+        <div class="sk-name">Bootstrap 5</div>
+        <div class="sk-desc">Rapid UI development using Bootstrap's grid, components, utilities & custom themes</div>
+        <div class="sk-bar"><div class="sk-fill f-sky" data-w="90"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-yellow">⚡</div><span class="sk-lv lv-a">Advanced</span></div>
+        <div class="sk-name">JavaScript</div>
+        <div class="sk-desc">DOM manipulation, ES6+, events, fetch API, local storage & interactive UI logic</div>
+        <div class="sk-bar"><div class="sk-fill f-yellow" data-w="82"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-mint">📱</div><span class="sk-lv lv-e">Expert</span></div>
+        <div class="sk-name">Responsive Design</div>
+        <div class="sk-desc">Mobile-first approach, fluid layouts, breakpoints & cross-device compatibility</div>
+        <div class="sk-bar"><div class="sk-fill f-mint" data-w="95"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-coral">✨</div><span class="sk-lv lv-a">Advanced</span></div>
+        <div class="sk-name">CSS Animations</div>
+        <div class="sk-desc">Keyframes, scroll effects, hover states, micro-interactions & smooth motion design</div>
+        <div class="sk-bar"><div class="sk-fill f-coral" data-w="85"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-sky">🌐</div><span class="sk-lv lv-a">Advanced</span></div>
+        <div class="sk-name">Web Hosting</div>
+        <div class="sk-desc">Deploying sites on GitHub Pages, Netlify, Vercel; custom domains & CI/CD basics</div>
+        <div class="sk-bar"><div class="sk-fill f-sky" data-w="80"></div></div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-top"><div class="sk-ico ico-w">🎯</div><span class="sk-lv lv-g">Good</span></div>
+        <div class="sk-name">UI/UX Design</div>
+        <div class="sk-desc">Color theory, typography, layout composition, wireframing & user experience thinking</div>
+        <div class="sk-bar"><div class="sk-fill f-mint" data-w="75"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="wrap">
+    <div class="proj-head reveal">
+      <div>
+        <div class="sec-lbl l-mint">My Work</div>
+        <h2 class="sec-title">Featured Projects</h2>
+      </div>
+      <a href="#contact" class="btn-ghost"><i class="fas fa-plus"></i> Commission a Project</a>
+    </div>
+    <div class="proj-grid">
+
+      <!-- Instagram Clone -->
+      <div class="pc pc-feat reveal">
+        <div class="pc-vis">
+          <div class="pc-bg bg-insta">
+            <div class="mock">
+              <div class="mock-bar">
+                <div class="md" style="background:#ff5f57"></div>
+                <div class="md" style="background:#febc2e"></div>
+                <div class="md" style="background:#28c840"></div>
+              </div>
+              <div class="mock-body">
+                <div class="ig-m">
+                  <div class="ig-m-top"><span style="font-style:italic">Instagram</span><span>❤️ ✉️</span></div>
+                  <div class="ig-m-stories">
+                    <div class="ig-m-s"></div><div class="ig-m-s" style="border-color:var(--sky)"></div>
+                    <div class="ig-m-s" style="border-color:var(--violet)"></div><div class="ig-m-s" style="border-color:var(--yellow)"></div>
+                    <div class="ig-m-s" style="border-color:var(--mint)"></div>
+                  </div>
+                  <div style="padding:3px 5px;background:rgba(0,0,0,.3);display:flex;align-items:center;gap:5px">
+                    <div style="width:18px;height:18px;border-radius:50%;background:var(--grad1)"></div>
+                    <div style="flex:1;height:12px;background:rgba(255,255,255,.06);border-radius:4px;border:1px solid rgba(255,255,255,.1)"></div>
+                  </div>
+                  <div style="height:55px;background:linear-gradient(135deg,rgba(255,77,109,.3),rgba(255,190,11,.2));display:flex;align-items:center;justify-content:center;font-size:1.2rem">🖼️</div>
+                  <div style="display:flex;gap:4px;padding:3px 5px;font-size:.5rem;color:rgba(255,255,255,.5)"><span>❤️ 248</span><span>💬 12</span><span>📤</span></div>
+                  <div class="ig-m-grid">
+                    <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(255,77,109,.5),rgba(255,190,11,.4));height:30px"></div>
+                    <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(76,201,240,.5),rgba(59,240,192,.4));height:30px"></div>
+                    <div class="ig-m-cell" style="background:linear-gradient(135deg,rgba(199,125,255,.5),rgba(255,77,109,.3));height:30px"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-around;padding:4px;font-size:.65rem;color:rgba(255,255,255,.4);border-top:1px solid rgba(255,255,255,.07)"><span>🏠</span><span>🔍</span><span>🎬</span><span>🛍️</span><span>👤</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-info-top">
+            <div><div class="pc-cat">Clone Project · Instagram</div><h3 class="pc-title">Instagram Clone</h3></div>
+            <a href="#" class="pc-arrow"><i class="fas fa-arrow-up-right"></i></a>
+          </div>
+          <p class="pc-desc">A fully responsive Instagram clone featuring stories, post feed, explore grid, like/comment interactions, and mobile-optimized navigation. Built pixel-perfectly with pure HTML, CSS & JavaScript.</p>
+          <div class="pc-tags"><span class="ptag">HTML5</span><span class="ptag">CSS3</span><span class="ptag">JavaScript</span><span class="ptag">Responsive</span><span class="ptag">Clone</span></div>
+        </div>
+      </div>
+
+      <!-- Hosting Website -->
+      <div class="pc reveal">
+        <div class="pc-vis">
+          <div class="pc-bg bg-host">
+            <div class="mock">
+              <div class="mock-bar"><div class="md" style="background:#ff5f57"></div><div class="md" style="background:#febc2e"></div><div class="md" style="background:#28c840"></div></div>
+              <div class="mock-body">
+                <div class="host-m">
+                  <div class="host-m-nav">
+                    <div style="width:25px;height:5px;background:rgba(255,255,255,.3);border-radius:1px"></div>
+                    <div style="flex:1;display:flex;gap:3px;justify-content:flex-end">
+                      <div style="width:14px;height:4px;background:rgba(255,255,255,.18);border-radius:1px"></div>
+                      <div style="width:14px;height:4px;background:rgba(255,255,255,.18);border-radius:1px"></div>
+                      <div style="width:18px;height:4px;background:rgba(59,240,192,.5);border-radius:1px"></div>
+                    </div>
+                  </div>
+                  <div class="host-m-hero">
+                    <div style="font-size:.4rem;font-family:'Syne',sans-serif;font-weight:800;color:rgba(255,255,255,.7)">🌐 Host Your Website</div>
+                    <div style="width:35px;height:4px;background:linear-gradient(90deg,var(--mint),var(--sky));border-radius:2px;margin-top:2px"></div>
+                  </div>
+                  <div class="host-m-cards"><div class="host-m-card" style="background:rgba(59,240,192,.12);border:1px solid rgba(59,240,192,.2)"></div><div class="host-m-card" style="background:rgba(76,201,240,.1);border:1px solid rgba(76,201,240,.2)"></div><div class="host-m-card"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-info-top">
+            <div><div class="pc-cat">Web Platform</div><h3 class="pc-title">Hosting Website</h3></div>
+            <a href="#" class="pc-arrow"><i class="fas fa-arrow-up-right"></i></a>
+          </div>
+          <p class="pc-desc">A complete hosting platform UI with pricing tables, domain search, server dashboard & one-click deploy flow. Built with Bootstrap 5.</p>
+          <div class="pc-tags"><span class="ptag">HTML5</span><span class="ptag">CSS3</span><span class="ptag">Bootstrap</span><span class="ptag">JavaScript</span></div>
+        </div>
+      </div>
+
+      <!-- Portfolio -->
+      <div class="pc reveal">
+        <div class="pc-vis">
+          <div class="pc-bg bg-port">
+            <div class="mock">
+              <div class="mock-bar"><div class="md" style="background:#ff5f57"></div><div class="md" style="background:#febc2e"></div><div class="md" style="background:#28c840"></div></div>
+              <div class="mock-body">
+                <div class="port-m">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:2px 0">
+                    <div style="font-size:.5rem;font-family:'Syne',sans-serif;font-weight:800;background:linear-gradient(90deg,#3BF0C0,#38ef7d);background-clip:text;-webkit-text-fill-color:transparent">SS.</div>
+                    <div style="display:flex;gap:2px"><div style="width:9px;height:3px;background:rgba(255,255,255,.3);border-radius:1px"></div><div style="width:9px;height:3px;background:rgba(255,255,255,.3);border-radius:1px"></div></div>
+                  </div>
+                  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:5px 0">
+                    <div style="width:65%;height:6px;background:rgba(255,255,255,.35);border-radius:2px"></div>
+                    <div style="width:45%;height:4px;background:rgba(59,240,192,.5);border-radius:2px"></div>
+                    <div style="width:55%;height:3px;background:rgba(255,255,255,.14);border-radius:2px"></div>
+                    <div style="display:flex;gap:3px;margin-top:3px">
+                      <div style="width:28px;height:10px;background:linear-gradient(90deg,#3BF0C0,#38ef7d);border-radius:4px"></div>
+                      <div style="width:24px;height:10px;background:rgba(255,255,255,.08);border-radius:4px;border:1px solid rgba(255,255,255,.15)"></div>
+                    </div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">
+                    <div style="height:18px;background:rgba(59,240,192,.1);border-radius:3px;border:1px solid rgba(59,240,192,.2)"></div>
+                    <div style="height:18px;background:rgba(255,255,255,.04);border-radius:3px;border:1px solid rgba(255,255,255,.1)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-info-top">
+            <div><div class="pc-cat">Personal Project</div><h3 class="pc-title">Portfolio Website</h3></div>
+            <a href="#" class="pc-arrow"><i class="fas fa-arrow-up-right"></i></a>
+          </div>
+          <p class="pc-desc">This portfolio — animated hero, skill cards, projects showcase & contact section with full mobile responsiveness.</p>
+          <div class="pc-tags"><span class="ptag">HTML5</span><span class="ptag">CSS3</span><span class="ptag">JavaScript</span><span class="ptag">Animations</span></div>
+        </div>
+      </div>
+
+      <!-- Bootstrap Landing Page -->
+      <div class="pc reveal">
+        <div class="pc-vis">
+          <div class="pc-bg bg-boot">
+            <div class="mock">
+              <div class="mock-bar"><div class="md" style="background:#ff5f57"></div><div class="md" style="background:#febc2e"></div><div class="md" style="background:#28c840"></div></div>
+              <div class="mock-body">
+                <div class="boot-m">
+                  <div class="boot-m-nav">
+                    <div style="width:22px;height:5px;background:rgba(0,0,0,.3);border-radius:1px"></div>
+                    <div style="flex:1;display:flex;gap:3px;justify-content:flex-end"><div style="width:10px;height:4px;background:rgba(0,0,0,.2);border-radius:1px"></div><div style="width:10px;height:4px;background:rgba(0,0,0,.2);border-radius:1px"></div><div style="width:14px;height:4px;background:rgba(247,151,30,.7);border-radius:1px"></div></div>
+                  </div>
+                  <div class="boot-m-hero">
+                    <div style="text-align:center"><div style="font-size:.4rem;color:rgba(0,0,0,.45);font-family:'Syne',sans-serif;font-weight:800">LANDING PAGE</div><div style="width:25px;height:3px;background:linear-gradient(90deg,#f7971e,#ffd200);border-radius:1px;margin:2px auto"></div></div>
+                  </div>
+                  <div class="boot-m-row"><div class="boot-m-c" style="background:rgba(247,151,30,.2)"></div><div class="boot-m-c" style="background:rgba(247,151,30,.15)"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-info">
+          <div class="pc-info-top">
+            <div><div class="pc-cat">UI Design</div><h3 class="pc-title">Bootstrap Landing Page</h3></div>
+            <a href="#" class="pc-arrow"><i class="fas fa-arrow-up-right"></i></a>
+          </div>
+          <p class="pc-desc">Multi-section responsive landing page with Bootstrap 5 — featuring custom animations, carousels & component-based design.</p>
+          <div class="pc-tags"><span class="ptag">Bootstrap 5</span><span class="ptag">HTML5</span><span class="ptag">CSS3</span><span class="ptag">Responsive</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="wrap">
+    <div class="exp-grid">
+      <div class="exp-sticky reveal">
+        <div class="sec-lbl l-sky">Journey</div>
+        <h2 class="sec-title">Experience &amp;<br>Education</h2>
+        <p>My path through learning, building, and growing as a frontend developer — from the first HTML tag to fully interactive web applications.</p>
+        <a href="#contact" class="btn-glow" style="display:inline-flex;margin-top:2rem"><i class="fas fa-download"></i> Download CV</a>
+      </div>
+      <div class="timeline reveal">
+        <div class="exp-item">
+          <div class="exp-dot">💼</div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div><div class="exp-ttl">Frontend Developer</div><div class="exp-co" style="color:var(--coral)">Freelance / Self-Employed</div></div>
+              <div class="exp-date">2023 – Present</div>
+            </div>
+            <p class="exp-body">Building responsive and interactive websites for clients. Delivered projects including Instagram clone, hosting platform UI, portfolio sites and multiple landing pages. Specialized in clean, semantic HTML/CSS/JS development with Bootstrap.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot">🎓</div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div><div class="exp-ttl">Full Web Development Course</div><div class="exp-co" style="color:var(--violet)">Online Learning Platform</div></div>
+              <div class="exp-date">2022 – 2023</div>
+            </div>
+            <p class="exp-body">Completed comprehensive courses covering HTML5, CSS3, Bootstrap 5 and JavaScript. Built 10+ real-world projects including responsive layouts, CSS animations, DOM manipulation and interactive UI components.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot">📱</div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div><div class="exp-ttl">Instagram Clone</div><div class="exp-co" style="color:var(--mint)">Featured Project</div></div>
+              <div class="exp-date">2023</div>
+            </div>
+            <p class="exp-body">Designed and developed a pixel-perfect Instagram clone from scratch — stories UI, post feed with likes/comments, explore grid and fully responsive navbar. Pure HTML, CSS & JavaScript with zero external frameworks.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-dot">🌐</div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div><div class="exp-ttl">Web Hosting Platform</div><div class="exp-co" style="color:var(--sky)">Featured Project</div></div>
+              <div class="exp-date">2024</div>
+            </div>
+            <p class="exp-body">Created a full-featured hosting services website with pricing tables, domain search UI, server dashboard mockups and animated CTA sections — built with Bootstrap 5 and vanilla JavaScript for interactions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="c-blobs"><div class="cb cb1"></div><div class="cb cb2"></div></div>
+  <div class="contact-inner reveal">
+    <div class="sec-lbl l-coral">Let's Talk</div>
+    <h2 class="contact-big">Have a project in mind?<br>Let's build it together 🚀</h2>
+    <p class="contact-sub">I'm always open to exciting new projects, collaborations and opportunities. Whether it's a website, a clone, a platform — or something completely unique — let's make it happen.</p>
+    <a href="mailto:srishtisingh@email.com" class="contact-email">srishtisingh@email.com</a>
+    <div class="socials">
+      <a href="#" class="soc-btn"><i class="fab fa-github"></i> GitHub</a>
+      <a href="#" class="soc-btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="#" class="soc-btn"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#" class="soc-btn"><i class="fab fa-twitter"></i> Twitter</a>
+      <a href="#" class="soc-btn"><i class="fas fa-globe"></i> Website</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#home" class="foot-logo">Srishti<span>.</span></a>
+  <p>© 2024 Srishti Singh — Designed &amp; Built with ❤️</p>
+  <p>Frontend Developer &amp; UI Designer</p>
+</footer>
+
+<script>
+// Custom cursor
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+
+// Mobile nav
+const ham=document.getElementById('ham'),nm=document.getElementById('navMenu');
+let open=false;
+ham.addEventListener('click',()=>{
+  open=!open;
+  if(open){
+    nm.style.cssText='display:flex;flex-direction:column;position:absolute;top:65px;right:1.5rem;background:rgba(14,14,22,.97);padding:1.5rem 2rem;border-radius:16px;border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(20px);gap:1.2rem;z-index:600';
+  } else {nm.style.cssText='';}
+});
+
+// Scroll reveal
+const revEls=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*70);});
+},{threshold:.1});
+revEls.forEach(r=>io.observe(r));
+
+// Skill bar fill on visible
+const fills=document.querySelectorAll('.sk-fill');
+const fo=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,w=el.getAttribute('data-w');
+      setTimeout(()=>{el.style.width=w+'%';},300);
+      fo.unobserve(el);
+    }
+  });
+},{threshold:.5});
+fills.forEach(f=>fo.observe(f));
+
+// Active nav
+const secs=document.querySelectorAll('section[id]');
+const lnks=document.querySelectorAll('.nav-menu a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-200)cur=s.id;});
+  lnks.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+cur?'#fff':'rgba(255,255,255,.5)';});
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();open=false;nm.style.cssText='';t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
